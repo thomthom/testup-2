@@ -141,6 +141,7 @@ module TestUp
       true
     end
 
+    # TODO(thomthom): Check if MiniTest already have and assert for this.
     def capture_stdout(verbose = $VERBOSE, &block)
       io_buffer = StringIO.new
       stdout = $stdout
@@ -153,6 +154,7 @@ module TestUp
       $stdout = stdout
     end
 
+    # TODO(thomthom): Check if MiniTest already have and assert for this.
     def capture_stderr(verbose = $VERBOSE, &block)
       io_buffer = StringIO.new
       stderr = $stderr
@@ -174,6 +176,37 @@ module TestUp
       block.call
     ensure
       $VERBOSE = verbose
+    end
+
+    # @param [Sketchup::ComponentInstance, Sketchup::Group] instance
+    # @return [Boolean]
+    def open_instance(instance)
+      model = Sketchup.active_model
+      unless model.active_entities.include?(instance)
+        raise ArgumentError, 'instance must be in active entities'
+      end
+      # The selection must be manipulated for this to work. Ensure the instance
+      # is selected, but keep a copy so it can be restored.
+      model.selection.clear
+      model.selection.add(instance)
+      # Making the instance open is platform spesific.
+      if Sketchup.platform == :platform_win
+        type = case instance
+        when Sketchup::ComponentInstance
+          'Component'
+        when Sketchup::Group
+          'Group'
+        else
+          raise ArgumentError, 'expected a group or component instance'
+        end
+        command = "Edit/Item/Edit #{type}"
+        unless Win32Helper::Shortcuts.trigger(command)
+          raise RuntimeError, 'shortcut not set for command'
+        end
+      else
+        raise NotImplementedError
+      end
+      nil
     end
 
   end # module
