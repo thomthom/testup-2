@@ -209,6 +209,11 @@ module TestUp
       nil
     end
 
+    def close_all_instances
+      while Sketchup.active_model.close_active; end
+      nil
+    end
+
   end # module
 
 
