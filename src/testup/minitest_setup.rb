@@ -8,7 +8,7 @@
 
 # Load required extensions to the Sketchup::Console class in order to run the
 # tests in the SketchUp console.
-require File.join(__dir__, 'console.rb')
+require 'testup/console.rb'
 $stdout = TestUp::TESTUP_CONSOLE
 $stderr = TestUp::TESTUP_CONSOLE
 
@@ -16,11 +16,11 @@ $stderr = TestUp::TESTUP_CONSOLE
 # Load MiniTest. This is a modification from minitest/autoload.rb which doesn't
 # run the tests when SketchUp exits because MiniTest.autoload uses at_exit {}.
 
-require "rubygems"
-gem "minitest"
-require "minitest"
-require "minitest/spec"
-require "minitest/mock"
+require 'rubygems'
+gem 'minitest'
+require 'minitest'
+require 'minitest/spec'
+require 'minitest/mock'
 
 
 # TestUp modifications of Minitest.

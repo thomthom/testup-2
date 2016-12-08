@@ -6,10 +6,10 @@
 #-------------------------------------------------------------------------------
 
 
-require File.join(__dir__, 'minitest_setup.rb')
+require 'testup/minitest_setup.rb'
 
 if defined?(Sketchup)
-  require File.join(__dir__, 'sketchup_test_utilities.rb')
+  require 'testup/sketchup_test_utilities.rb'
 end
 
 
