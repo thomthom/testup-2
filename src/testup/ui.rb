@@ -119,7 +119,9 @@ module TestUp
 
     # Menus
     if defined?(Sketchup)
-      menu = UI.menu('Plugins').add_submenu(PLUGIN_NAME)
+      top_menu = UI.menu('Plugins')
+      if top_menu
+      menu = top_menu.add_submenu(PLUGIN_NAME)
       menu.add_item(cmd_toggle_testup)
       menu.add_separator
       menu.add_item(cmd_seed)
@@ -145,11 +147,13 @@ module TestUp
         menu.add_separator
         menu.add_item(cmd_reload_testup)
       end
+      end
     end
 
     # Toolbar
     if defined?(Sketchup)
       toolbar = UI::Toolbar.new(PLUGIN_NAME)
+      if toolbar
       toolbar.add_item(cmd_toggle_testup)
       toolbar.add_separator
       toolbar.add_item(cmd_seed)
@@ -164,6 +168,7 @@ module TestUp
         toolbar.add_item(cmd_reload_testup)
       end
       toolbar.restore
+      end
     end
 
     # Ensure this method is run only once.

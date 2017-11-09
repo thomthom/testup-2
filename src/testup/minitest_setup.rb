@@ -22,6 +22,8 @@ require "minitest"
 require "minitest/spec"
 require "minitest/mock"
 
+require "minitest/autorun"
+
 
 # TestUp modifications of Minitest.
 module Minitest
@@ -46,7 +48,7 @@ module Minitest
 
   end # class << self
 
-end # module Minitest
+end if false # module Minitest
 
 
 # TODO(thomthom): Not sure if this is needed.
@@ -68,4 +70,4 @@ Minitest.parallel_executor = Minitest::Parallel::Executor.new(0)
 # Verify by checking after `MiniTest.run`:
 # Minitest.extensions
 # > ["pride", "testup"]
-$LOAD_PATH << File.join(__dir__, 'minitest_plugins')
+# $LOAD_PATH << File.join(__dir__, 'minitest_plugins')

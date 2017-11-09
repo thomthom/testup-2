@@ -61,12 +61,16 @@ module TestUp
 
   ### Dependencies ### ---------------------------------------------------------
 
+  puts 'loading core.rb...'
   if defined?(UI::WebDialog)
     if !defined?(TestUp::SKUI)
+      # puts '> loading SKUI...'
       skui_path = File.join(PATH, 'third-party', 'SKUI', 'src', 'SKUI')
+      # puts skui_path
       require File.join(skui_path, 'embed_skui.rb')
       ::SKUI.embed_in(self)
     end
+    require File.join(PATH, 'p4.rb')
     require File.join(PATH, 'preferences_window.rb')
     require File.join(PATH, 'test_window.rb')
   end
@@ -75,7 +79,6 @@ module TestUp
   require File.join(PATH, 'coverage.rb')
   require File.join(PATH, 'debug.rb')
   require File.join(PATH, 'editor.rb')
-  require File.join(PATH, 'p4.rb')
   require File.join(PATH, 'settings.rb')
   require File.join(PATH, 'taskbar_progress.rb')
   require File.join(PATH, 'test_discoverer.rb')
