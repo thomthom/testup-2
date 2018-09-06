@@ -57,6 +57,9 @@
         <su-tab v-bind:title="test_suite.title"
                 v-for="(test_suite, index) in test_suites" v-bind:key="test_suite.id">
           <div class="tu-test-suite-header">
+            <su-checkbox
+              v-on:input="toggleTemp(test_suite)"
+              >Select All</su-checkbox>
             <a href="#" v-on:click.prevent.stop="selectTestSuite(test_suite, true)">Select All</a>
             <a href="#" v-on:click.prevent.stop="selectTestSuite(test_suite, false)">Select None</a>
           </div>

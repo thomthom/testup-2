@@ -22,6 +22,7 @@ import { SketchUpRunner } from "./ts/interfaces/sketchup-runner";
 declare const sketchup: SketchUpRunner;
 
 import SUButton from "./components/su-button.vue";
+import SUCheckbox from "./components/su-checkbox.vue";
 import SUPanelGroup from "./components/su-panel-group.vue";
 import SUPanel from "./components/su-panel.vue";
 import SUScrollable from "./components/su-scrollable.vue";
@@ -127,6 +128,37 @@ window.app = new Vue({
           test.enabled = enabled
         }
       }
+    },
+    toggleTemp: function(test_suite: TestSuite) {
+      console.log('toggleTemp');
+      console.log(this);
+      console.log(test_suite);
+    },
+    toggleTestSuite(test_suite: TestSuite, event: Event) {
+      console.log('toggleTestSuite');
+      console.log('event', event);
+      // console.log(this);
+      // console.log('event', x, y, z);
+      let element = event.srcElement as HTMLInputElement;
+      console.log(element.checked);
+      console.log('arguments', arguments);
+      console.log('test_suite', test_suite);
+      let allSelected = this.isAllTestsSelected(test_suite);
+      this.selectTestSuite(test_suite, !allSelected);
+      element.checked = !allSelected;
+    },
+    isAllTestsSelected(test_suite: TestSuite) {
+      for (let test_case of test_suite.test_cases) {
+        if (!test_case.enabled) {
+          return false;
+        }
+        for (let test of test_case.tests) {
+          if (!test.enabled) {
+            return false;
+          }
+        }
+      }
+      return true;
     },
     runTests() {
       let test_suite = this.test_suites[this.activeTestSuiteIndex];
@@ -245,6 +277,7 @@ window.app = new Vue({
   },
   components: {
     'su-button': SUButton,
+    'su-checkbox': SUCheckbox,
     'su-panel': SUPanel,
     'su-panel-group': SUPanelGroup,
     'su-scrollable': SUScrollable,
