@@ -9,5 +9,6 @@ export interface SketchUpRunner extends SketchUp {
   discoverTests(test_suites: string): void;
   openPreferences(): void;
   reRunTests(): void;
+  preRunTests(callback: any): void;
   runTests(test_suite: TestSuite): void;
 }

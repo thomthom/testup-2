@@ -67,7 +67,28 @@ module TestUp
 
     def register_callbacks(dialog)
       super
+      dialog.register_callback('preRunTests') { |dialog|
+        Log.trace :callback, "preRunTests(...)"
+        # Nasty workaround a bug in UI::HtmlDialog's callbacks where the
+        # parameters in the callback can be garbage collected too early and
+        # cause SketchUp to terminate without BugSplat.
+        # We workaround this by temporarily disabling garbage collection before
+        # making the actual callback with all the test suite data.
+        # The crash can probably still happen in other callbacks, but when
+        # running the large SketchUp Ruby API test suite we consistently ran
+        # into the crash here. This unblocks the testing process until a fix
+        # is shipped with SketchUp.
+        if Sketchup.version.to_i < 20
+          GC.start # Free up some garbage before we disable the collection.
+          GC.disable
+        end
+      }
       dialog.register_callback('runTests') { |dialog, test_suite_json|
+        # See comment above.
+        if Sketchup.version.to_i < 20
+          GC.enable
+          GC.start # Clean up after having disabled GC.
+        end
         Log.trace :callback, "runTests(...)"
         event_run_tests(test_suite_json)
       }

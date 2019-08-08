@@ -132,7 +132,14 @@ window.app = new Vue({
     },
     runTests() {
       let test_suite = this.test_suites[this.activeTestSuiteIndex];
-      sketchup.runTests(test_suite);
+      // sketchup.runTests(test_suite);
+      console.log('preRunTests...');
+      sketchup.preRunTests({
+        onCompleted: function() {
+          console.log('preRunTests done!');
+          sketchup.runTests(test_suite);
+        }
+      });
     },
     discoverTests() {
       // TODO: This appear to sometimes cause crashes.

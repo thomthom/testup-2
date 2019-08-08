@@ -21,4 +21,10 @@ export class RunnerWebDialogShim extends WebDialogShim implements SketchUpRunner
   {
     this.sketchup('runTests', [test_suite]);
   }
+  preRunTests(callback: any): void
+  {
+    // This event is only needed to work around a bug in HtmlDialog.
+    // WebDialog does not have the same issue.
+    callback();
+  }
 }
