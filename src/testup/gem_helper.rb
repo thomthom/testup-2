@@ -11,7 +11,7 @@ module TestUp
     # @param [String] gem_name
     # @param [String] filename
     # @param [Gem::Requirement] version
-    def self.require(gem_name, filename, version: Gem::Requirement.default)
+    def self.require(gem_name, filename, version: 0)
       Kernel.require 'rubygems'
       begin
         gem gem_name, ">=#{version}"

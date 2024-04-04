@@ -10,6 +10,7 @@ require 'testup/gem_helper'
 
 module TestUp
 
+  # TODO(thomthom): Issue with this gem and MiniTest vs Minitest.
   GemHelper.require('minitest-reporters-json_reporter',
                     'minitest/reporters/json_reporter')
   # https://github.com/edhowland/minitest-reporters-json_reporter#usage
